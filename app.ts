@@ -1,10 +1,9 @@
-const express = require('express');
-const {ApolloServer} = require('apollo-server-express');
+import express from 'express';
+import { ApolloServer } from 'apollo-server-express';
+import {typeDefs} from './typeDefs';
+import {resolvers} from './resolvers';
+import {connectDB} from './db';
 
-const {typeDefs} = require('./typeDefs');
-const {resolvers} = require('./resolvers');
-
-const {connectDB} = require('./db');
 
 const app = express();
 connectDB();
@@ -27,8 +26,10 @@ async function start() {
 
     apolloServer.applyMiddleware({app:app});
 
-    app.listen(3000, () => {
-        console.log('Server on port', 3000);
+    const port = 7777;
+
+    app.listen(port, () => {
+        console.log('Server on port', port);
     });
 };
 

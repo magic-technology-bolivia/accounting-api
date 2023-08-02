@@ -1,40 +1,40 @@
-const Task = require('./models/Task')
+const Account = require('./models/Account')
 
 export const resolvers = {
     Query: {
         hello: () => 'Hello World',
-        getAllTasks: async () => {
-            const tasks = await Task.find();
-            return tasks
+        getAllAccounts: async () => {
+            const accounts = await Account.find();
+            return accounts
         },
-        getTask: async (_: any, args: any) => {
-            const task = await Task.findById(args.id);
-            return task;
+        getAccount: async (_: any, args: any) => {
+            const account = await Account.findById(args.id);
+            return account;
         }
     },
     Mutation: {
-        createTask: async (_: any, args: any) => {
+        createAccount: async (_: any, args: any) => {
 
             //console.log({parent, args, context, info});
-            const {title, description} = args;
-            const newTask = new Task({title, description});
-            await newTask.save();
-            console.log(newTask);
+            const {name, description} = args;
+            const newAccount = new Account({name, description});
+            await newAccount.save();
+            console.log(newAccount);
 
-            return newTask;
+            return newAccount;
         },
-        async deleteTask(_: any, {id}: any){
-            await Task.findByIdAndDelete(id);
-            return "Task deleted";
+        async deleteAccount(_: any, {id}: any){
+            await Account.findByIdAndDelete(id);
+            return "Account deleted";
         },
-        async updateTask(_: any, {task, id}: any){
-            const taskUpdated = await Task.findByIdAndUpdate(id, task, {
-                $set: task
+        async updateAccount(_: any, {account, id}: any){
+            const accountUpdated = await Account.findByIdAndUpdate(id, account, {
+                $set: account
             },
             {new:true});
 
-            console.log(taskUpdated, id);
-            return taskUpdated
+            console.log(accountUpdated, id);
+            return accountUpdated
         }
     }
 }
