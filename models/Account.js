@@ -1,15 +1,25 @@
 const {Schema, model} = require('mongoose');
 
 const accountSchema = new Schema({
+    code:{
+        type: Number,
+        required: true
+    },
+    auxiliary:{
+        type: String,
+    },
     name: {
         type: String,
         required: true
-    },
-    description: String,
+    },    
     parent_id: {
         type: Schema.Types.ObjectId,
     },
-    class: {    
+    parent_code: {
+        type: Number,
+    },
+
+    class: {
         type: String,
     },
     level: {

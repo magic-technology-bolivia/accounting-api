@@ -3,9 +3,10 @@ const {gql} = require('apollo-server-express')
 export const typeDefs = gql`
 
     type Account {
-        id: ID
-        name: String,
-        description: String
+        id: ID,
+        code: String,
+        auxiliary: String,
+        name: String
     }
 
     type Query {
@@ -16,7 +17,7 @@ export const typeDefs = gql`
 
     input AccountInput{
         name: String
-        description: String        
+        description: String
     }
 
     type Mutation {
