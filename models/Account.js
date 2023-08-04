@@ -14,11 +14,7 @@ const accountSchema = new Schema({
     },    
     parent_id: {
         type: Schema.Types.ObjectId,
-    },
-    parent_code: {
-        type: Number,
-    },
-
+    },    
     class: {
         type: String,
     },

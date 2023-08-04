@@ -6,7 +6,13 @@ export const typeDefs = gql`
         id: ID,
         code: String,
         auxiliary: String,
-        name: String
+        name: String,
+        parent_id: ID,
+        class: String,
+        level: Int,
+        currency: String,
+        by_document: Boolean,
+        by_cost: Boolean,
     }
 
     type Query {
