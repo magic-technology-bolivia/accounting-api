@@ -16,8 +16,8 @@ export const resolvers = {
         createAccount: async (_: any, args: any) => {
 
             //console.log({parent, args, context, info});
-            const {name, description} = args;
-            const newAccount = new Account({name, description});
+            const {name} = args;
+            const newAccount = new Account({name});
             await newAccount.save();
             console.log(newAccount);
 

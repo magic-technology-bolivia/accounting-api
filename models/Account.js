@@ -2,7 +2,7 @@ const {Schema, model} = require('mongoose');
 
 const accountSchema = new Schema({
     code:{
-        type: Number,
+        type: String,
         required: true
     },
     auxiliary:{
@@ -11,7 +11,7 @@ const accountSchema = new Schema({
     name: {
         type: String,
         required: true
-    },    
+    },
     parent_id: {
         type: Schema.Types.ObjectId,
     },
@@ -23,7 +23,7 @@ const accountSchema = new Schema({
     },
     level: {
         type: Number,
-    },    
+    },
     currency: {
         type: Number
     },
