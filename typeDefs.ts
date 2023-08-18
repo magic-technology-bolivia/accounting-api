@@ -3,9 +3,8 @@ const {gql} = require('apollo-server-express')
 export const typeDefs = gql`
 
     type Account {
-        id: ID,
-        code: String,
-        auxiliary: String,
+        id: ID
+        code: Int,
         name: String,
         parent_id: ID,
         class: String,

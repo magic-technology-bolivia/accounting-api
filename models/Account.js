@@ -14,8 +14,11 @@ const accountSchema = new Schema({
     },    
     parent_id: {
         type: Schema.Types.ObjectId,
-    },    
-    class: {
+    },
+    code: {
+        type: Number,
+    },
+    class: {    
         type: String,
     },
     level: {
