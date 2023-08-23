@@ -17,7 +17,10 @@ export const resolvers = {
 
             //console.log({parent, args, context, info});
             const {name} = args;
-            const newAccount = new Account({name});
+            const {parent_id} = args;
+            const {code} = args;
+
+            const newAccount = new Account({name, parent_id, code});
             await newAccount.save();
             console.log(newAccount);
 

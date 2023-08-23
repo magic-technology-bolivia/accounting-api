@@ -15,23 +15,42 @@ const accountSchema = new Schema({
     parent_id: {
         type: Schema.Types.ObjectId,
     },
-    code: {
-        type: Number,
+
+    code: {           
+        element: { 
+            type: String,
+        },
+        group: {
+            type: String,
+        },
+        account: {
+            type: String,
+        },
+        subaccount: {
+            type: String,
+        },
+        auxiliary: {
+            type: String,
+        }
     },
-    class: {    
+    class: {   
         type: String,
     },
     level: {
         type: Number,
     },
     currency: {
-        type: Number
+        type: String,
     },
     by_document: {
-        type: Boolean,
+        type: Number,
+        min: 0,
+        max: 1
     },
     by_cost: {  
-        type: Boolean,
+        type: Number,
+        min: 0,
+        max: 1
     }
 });
 
