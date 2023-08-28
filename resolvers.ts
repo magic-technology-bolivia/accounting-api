@@ -4,7 +4,12 @@ export const resolvers = {
     Query: {
         hello: () => 'Hello World',
         getAllAccounts: async () => {
-            const accounts = await Account.find();
+            const accounts = await Account.aggregate([
+                { "$accounts": {
+                    "_id": 0,
+                    "friendly_code": "$code.element"
+                }}
+            ]);
             return accounts
         },
         getAccount: async (_: any, args: any) => {

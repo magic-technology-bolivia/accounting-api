@@ -14,6 +14,7 @@ export const typeDefs = gql`
         name: String,        
         parent_id: ID,
         code: Code,
+        friendly_code: String,
         class: String,
         level: Int,
         currency: String,
