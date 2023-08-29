@@ -5,10 +5,19 @@ export const resolvers = {
         hello: () => 'Hello World',
         getAllAccounts: async () => {
             const accounts = await Account.aggregate([
-                { "$accounts": {
-                    "_id": 0,
-                    "friendly_code": "$code.element"
-                }}
+                { $addFields: {
+                  "friendly_code": {
+                    $concat: 
+                    [
+                      "$code.element",
+                      { $cond: [ { $ne: [ '$code.group', "" ] }, {$concat: ['.', '$code.group']}, '' ] },
+                      { $cond: [ { $ne: [ '$code.account', "" ] }, {$concat: ['.', '$code.account']}, '' ] },
+                      { $cond: [ { $ne: [ '$code.subaccount', "" ] }, {$concat: ['.','$code.subaccount']}, '' ] },
+                      { $cond: [ { $ne: [ '$code.auxiliary', "" ] }, {$concat: ['.','$code.auxiliary']}, '' ] },
+                    ]
+                  }
+                }
+              }
             ]);
             return accounts
         },

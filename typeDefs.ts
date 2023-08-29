@@ -28,7 +28,7 @@ export const typeDefs = gql`
         getAccount(id:ID): Account
     }
 
-    input InputCode{
+    input CodeInput{
         element: String,
         group: String,
         account: String,
@@ -40,7 +40,7 @@ export const typeDefs = gql`
         id: ID        
         name: String,        
         parent_id: ID,
-        code: InputCode,
+        code: CodeInput,
         class: String,
         level: Int,
         currency: String,
