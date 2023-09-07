@@ -5,20 +5,32 @@ export const resolvers = {
         hello: () => 'Hello World',
         getAllAccounts: async () => {
             const accounts = await Account.aggregate([
-                { $addFields: {
-                  "friendly_code": {
-                    $concat: 
-                    [
-                      "$code.element",
-                      { $cond: [ { $ne: [ '$code.group', "" ] }, {$concat: ['.', '$code.group']}, '' ] },
-                      { $cond: [ { $ne: [ '$code.account', "" ] }, {$concat: ['.', '$code.account']}, '' ] },
-                      { $cond: [ { $ne: [ '$code.subaccount', "" ] }, {$concat: ['.','$code.subaccount']}, '' ] },
-                      { $cond: [ { $ne: [ '$code.auxiliary', "" ] }, {$concat: ['.','$code.auxiliary']}, '' ] },
-                    ]
+                {
+                  $lookup: {
+                    from: "users",
+                    localField: "user_id",
+                    foreignField: "id",
+                    as: "author"
                   }
-                }
-              }
-            ]);
+                },
+                {
+                  $unwind: "$author"
+                },
+                {
+                  $addFields: {
+                    "friendly_code": {
+                      $concat: [
+                        "$code.element",
+                        { $cond: [ { $ne: [ '$code.group', "" ] }, {$concat: ['.', '$code.group']}, '' ] },
+                        { $cond: [ { $ne: [ '$code.account', "" ] }, {$concat: ['.', '$code.account']}, '' ] },
+                        { $cond: [ { $ne: [ '$code.subaccount', "" ] }, {$concat: ['.','$code.subaccount']}, '' ] },
+                        { $cond: [ { $ne: [ '$code.auxiliary', "" ] }, {$concat: ['.','$code.auxiliary']}, '' ] },
+                      ]
+                    }
+                  }
+                },    
+              ]);
+              
             return accounts
         },
         getAccount: async (_: any, args: any) => {
@@ -28,17 +40,16 @@ export const resolvers = {
     },
     Mutation: {
         createAccount: async (_: any, args: any) => {
-
-            //console.log({parent, args, context, info});
+            
             const {name} = args;
             const {parent_id} = args;
+            const {author_id} = args;
             const {level} = args;
             const {code} = args;
 
-            const newAccount = new Account({name, parent_id, level, code});
+            const newAccount = new Account({name, parent_id, author_id, level, code});
             await newAccount.save();
-            console.log(newAccount);
-
+            
             return newAccount;
         },
         async deleteAccount(_: any, {id}: any){

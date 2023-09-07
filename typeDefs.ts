@@ -1,7 +1,6 @@
 const {gql} = require('apollo-server-express')
 
 export const typeDefs = gql`
-
     type Code{
         element: String,
         group: String,
@@ -9,17 +8,25 @@ export const typeDefs = gql`
         subaccount: String,
         auxiliary: String,
     }
+    type User{
+        _id: ID,
+        username: String,
+        firstname: String,
+        lastname: String,
+    }
     type Account {
-        id: ID        
+        _id: ID        
         name: String,        
         parent_id: ID,
+        author_id: ID,
         code: Code,
         friendly_code: String,
         class: String,
         level: Int,
         currency: String,
         by_document: Int,
-        by_cost: Int,
+        by_cost: Int
+        author: User
     }
 
     type Query {
@@ -36,10 +43,10 @@ export const typeDefs = gql`
         auxiliary: String,
     }
 
-    input AccountInput{
-        id: ID        
+    input AccountInput{        
         name: String,        
         parent_id: ID,
+        author_id: ID,
         code: CodeInput,
         class: String,
         level: Int,
@@ -57,8 +64,8 @@ export const typeDefs = gql`
     }
 
     type Mutation {
-        createAccount(name: String, parent_id: String, level: String, code: AccountCode): Account,
-        deleteAccount(id: ID!): String,
-        updateAccount(id: ID!, account: AccountInput): Account,
+        createAccount(name: String!, parent_id: String, author_id: String, level: String, code: AccountCode): Account,
+        deleteAccount(_id: ID!): String,
+        updateAccount(_id: ID!, account: AccountInput): Account,
     }
 `

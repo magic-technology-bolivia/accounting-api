@@ -15,6 +15,9 @@ const accountSchema = new Schema({
     parent_id: {
         type: Schema.Types.ObjectId,
     },
+    user_id: {
+        type: Schema.Types.ObjectId,
+    },
 
     code: {           
         element: { 
