@@ -5,31 +5,31 @@ export const resolvers = {
         hello: () => 'Hello World',
         getAllAccounts: async () => {
             const accounts = await Account.aggregate([
-                {
-                  $lookup: {
-                    from: "users",
-                    localField: "user_id",
-                    foreignField: "id",
-                    as: "author"
+              {
+                $lookup: {
+                  from: 'users',
+                  localField: 'author_id',
+                  foreignField: '_id',
+                  as: 'author'
+                }
+              },                
+              {
+                $unwind: "$author"
+              },
+              {
+                $addFields: {
+                  "friendly_code": {
+                    $concat: [
+                      "$code.element",
+                      { $cond: [ { $ne: [ '$code.group', "" ] }, {$concat: ['.', '$code.group']}, '' ] },
+                      { $cond: [ { $ne: [ '$code.account', "" ] }, {$concat: ['.', '$code.account']}, '' ] },
+                      { $cond: [ { $ne: [ '$code.subaccount', "" ] }, {$concat: ['.','$code.subaccount']}, '' ] },
+                      { $cond: [ { $ne: [ '$code.auxiliary', "" ] }, {$concat: ['.','$code.auxiliary']}, '' ] },
+                    ]
                   }
-                },
-                {
-                  $unwind: "$author"
-                },
-                {
-                  $addFields: {
-                    "friendly_code": {
-                      $concat: [
-                        "$code.element",
-                        { $cond: [ { $ne: [ '$code.group', "" ] }, {$concat: ['.', '$code.group']}, '' ] },
-                        { $cond: [ { $ne: [ '$code.account', "" ] }, {$concat: ['.', '$code.account']}, '' ] },
-                        { $cond: [ { $ne: [ '$code.subaccount', "" ] }, {$concat: ['.','$code.subaccount']}, '' ] },
-                        { $cond: [ { $ne: [ '$code.auxiliary', "" ] }, {$concat: ['.','$code.auxiliary']}, '' ] },
-                      ]
-                    }
-                  }
-                },    
-              ]);
+                }
+              },    
+            ])
               
             return accounts
         },
@@ -52,17 +52,17 @@ export const resolvers = {
             
             return newAccount;
         },
-        async deleteAccount(_: any, {id}: any){
-            await Account.findByIdAndDelete(id);
+        async deleteAccount(_: any, {_id}: any){
+            await Account.findByIdAndDelete(_id);
             return "Account deleted";
         },
-        async updateAccount(_: any, {account, id}: any){
-            const accountUpdated = await Account.findByIdAndUpdate(id, account, {
+        async updateAccount(_: any, {account, _id}: any){
+            const accountUpdated = await Account.findByIdAndUpdate(_id, account, {
                 $set: account
             },
             {new:true});
 
-            console.log(accountUpdated, id);
+            console.log(accountUpdated, _id);
             return accountUpdated
         }
     }

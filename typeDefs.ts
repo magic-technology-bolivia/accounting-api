@@ -64,7 +64,7 @@ export const typeDefs = gql`
     }
 
     type Mutation {
-        createAccount(name: String!, parent_id: String, author_id: String, level: String, code: AccountCode): Account,
+        createAccount(name: String, parent_id: String, author_id: String, level: String, code: AccountCode): Account,
         deleteAccount(_id: ID!): String,
         updateAccount(_id: ID!, account: AccountInput): Account,
     }
