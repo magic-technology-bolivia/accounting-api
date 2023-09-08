@@ -14,25 +14,41 @@ export const typeDefs = gql`
         firstname: String,
         lastname: String,
     }
+    type Currency{
+        _id: ID,
+        fullname: String,
+        prefix: String,
+        country: String,
+    }
+    type Transaction{
+        _id: ID,
+        date: String,
+        reference: String,
+        type: String,
+        amount: Float,
+    }
     type Account {
-        _id: ID        
+        _id: ID
         name: String,        
-        parent_id: ID,
-        author_id: ID,
-        code: Code,
-        friendly_code: String,
+        parentId: ID,
+        authorId: ID,        
+        code: Code,        
+        friendlyCode: String,
+        updatedAt: String,
         class: String,
         level: Int,
-        currency: String,
-        by_document: Int,
-        by_cost: Int
+        currency: Currency,
+        byDocument: Int,
+        byCost: Int
         author: User
     }
 
     type Query {
         hello:String,
-        getAllAccounts: [Account],
-        getAccount(id:ID): Account
+        allAccounts: [Account],
+        allCurrencies: [Currency],
+        allTransactions: [Transaction],
+        accountBy(id:ID): Account
     }
 
     input CodeInput{
@@ -45,14 +61,15 @@ export const typeDefs = gql`
 
     input AccountInput{        
         name: String,        
-        parent_id: ID,
-        author_id: ID,
+        parentId: ID,        
+        currencyId: ID,
+        authorId: ID,
         code: CodeInput,
         class: String,
         level: Int,
         currency: String,
-        by_document: Int,
-        by_cost: Int,
+        byDocument: Int,
+        byCost: Int,
     }
 
     input AccountCode{
@@ -64,7 +81,8 @@ export const typeDefs = gql`
     }
 
     type Mutation {
-        createAccount(name: String, parent_id: String, author_id: String, level: String, code: AccountCode): Account,
+        createTransaction(reference: String, amount: Float): Transaction,
+        createAccount(name: String, parentId: String, currencyId: String, authorId: String, level: String, code: AccountCode): Account,
         deleteAccount(_id: ID!): String,
         updateAccount(_id: ID!, account: AccountInput): Account,
     }

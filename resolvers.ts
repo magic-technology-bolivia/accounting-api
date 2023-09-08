@@ -1,14 +1,16 @@
 const Account = require('./models/Account')
+const Currency = require('./models/Currency')
+const Transaction = require('./models/Transaction')
 
 export const resolvers = {
     Query: {
         hello: () => 'Hello World',
-        getAllAccounts: async () => {
+        allAccounts: async () => {
             const accounts = await Account.aggregate([
               {
                 $lookup: {
                   from: 'users',
-                  localField: 'author_id',
+                  localField: 'authorId',
                   foreignField: '_id',
                   as: 'author'
                 }
@@ -17,8 +19,19 @@ export const resolvers = {
                 $unwind: "$author"
               },
               {
+                $lookup: {
+                  from: 'currencies',
+                  localField: 'currencyId',
+                  foreignField: '_id',
+                  as: 'currency'
+                }
+              },                
+              {
+                $unwind: "$currency"
+              },
+              {
                 $addFields: {
-                  "friendly_code": {
+                  "friendlyCode": {
                     $concat: [
                       "$code.element",
                       { $cond: [ { $ne: [ '$code.group', "" ] }, {$concat: ['.', '$code.group']}, '' ] },
@@ -28,29 +41,49 @@ export const resolvers = {
                     ]
                   }
                 }
-              },    
+              },
+              {
+                $sort: {updateAt: -1}
+              }
             ])
-              
-            return accounts
+
+            return accounts;
         },
-        getAccount: async (_: any, args: any) => {
+        allCurrencies: async () => {
+            const currencies = await Currency.find();
+            return currencies;
+        },
+        allTransactions: async () => {
+          const transactions = await Transaction.find();
+          return transactions;
+        },
+
+        accountBy: async (_: any, args: any) => {
             const account = await Account.findById(args.id);
             return account;
         }
     },
     Mutation: {
-        createAccount: async (_: any, args: any) => {
-            
+        createAccount: async (_: any, args: any) => {            
             const {name} = args;
-            const {parent_id} = args;
-            const {author_id} = args;
+            const {parentId} = args;
+            const {currencyId} = args;
+            const {authorId} = args;            
             const {level} = args;
             const {code} = args;
 
-            const newAccount = new Account({name, parent_id, author_id, level, code});
-            await newAccount.save();
-            
+            const newAccount = new Account({name, parentId, currencyId, authorId, level, code});
+            await newAccount.save();            
             return newAccount;
+        },
+        createTransaction: async (_: any, args: any) => {            
+          const {reference} = args;
+          const {type} = args;
+          const {amount} = args;
+
+          const newTransaction = new Transaction({reference, type, amount});
+          await newTransaction.save();            
+          return newTransaction;
         },
         async deleteAccount(_: any, {_id}: any){
             await Account.findByIdAndDelete(_id);
@@ -58,7 +91,7 @@ export const resolvers = {
         },
         async updateAccount(_: any, {account, _id}: any){
             const accountUpdated = await Account.findByIdAndUpdate(_id, account, {
-                $set: account
+              $set: account
             },
             {new:true});
 
