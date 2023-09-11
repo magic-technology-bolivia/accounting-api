@@ -42,13 +42,19 @@ export const typeDefs = gql`
         byCost: Int
         author: User
     }
+    type DolibarrCategory{
+        id: ID,
+        label: String,
+        description: String,
+    }
 
     type Query {
         hello:String,
         allAccounts: [Account],
         allCurrencies: [Currency],
         allTransactions: [Transaction],
-        accountBy(id:ID): Account
+        accountBy(id:ID): Account,
+        dollibarrGetCategories: [DolibarrCategory],
     }
 
     input CodeInput{

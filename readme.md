@@ -7,6 +7,10 @@ npm i -D typescript ts-node-dev
 }
 
 npm i express apollo-server-express dotenv graphql mongoose
+------------------install for request dolibarr -------
+npm i axios
+npm i winston
+npm i querystring
 
 
 --------- GRAPHQL ---------------

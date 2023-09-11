@@ -1,6 +1,7 @@
 const Account = require('./models/Account')
 const Currency = require('./models/Currency')
 const Transaction = require('./models/Transaction')
+const Dolibarr = require('./models/dolibarr/Dolibarr.model')
 
 export const resolvers = {
     Query: {
@@ -61,6 +62,10 @@ export const resolvers = {
         accountBy: async (_: any, args: any) => {
             const account = await Account.findById(args.id);
             return account;
+        },
+
+        dollibarrGetCategories: async() =>{
+          return Dolibarr.getCategories();
         }
     },
     Mutation: {
