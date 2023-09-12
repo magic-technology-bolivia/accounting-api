@@ -60,7 +60,7 @@ export const resolvers = {
         },
 
         accountBy: async (_: any, args: any) => {
-            const account = await Account.findById(args.id);
+            const account = await Account.findById(args.accountId);
             return account;
         },
 
@@ -82,17 +82,22 @@ export const resolvers = {
             return newAccount;
         },
         createTransaction: async (_: any, args: any) => {            
+          const {createdAt} = args;
           const {reference} = args;
           const {type} = args;
           const {amount} = args;
 
-          const newTransaction = new Transaction({reference, type, amount});
+          const newTransaction = new Transaction({createdAt, reference, type, amount});
           await newTransaction.save();            
           return newTransaction;
         },
         async deleteAccount(_: any, {_id}: any){
             await Account.findByIdAndDelete(_id);
             return "Account deleted";
+        },
+        async deleteTransaction(_: any, {_id}: any){
+          await Transaction.findByIdAndDelete(_id);
+          return "Transaction deleted";
         },
         async updateAccount(_: any, {account, _id}: any){
             const accountUpdated = await Account.findByIdAndUpdate(_id, account, {
