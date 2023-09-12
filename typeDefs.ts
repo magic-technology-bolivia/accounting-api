@@ -8,6 +8,7 @@ export const typeDefs = gql`
         subaccount: String,
         auxiliary: String,
     }
+    
     type User{
         _id: ID,
         username: String,
@@ -22,7 +23,7 @@ export const typeDefs = gql`
     }
     type Transaction{
         _id: ID,
-        date: String,
+        createdAt: String,
         reference: String,
         type: String,
         amount: Float,
@@ -31,7 +32,8 @@ export const typeDefs = gql`
         _id: ID
         name: String,        
         parentId: ID,
-        authorId: ID,        
+        currencyId: ID,
+        authorId: ID,
         code: Code,        
         friendlyCode: String,
         updatedAt: String,
@@ -48,7 +50,7 @@ export const typeDefs = gql`
         allAccounts: [Account],
         allCurrencies: [Currency],
         allTransactions: [Transaction],
-        accountBy(id:ID): Account
+        accountBy(accountId:ID!): Account
     }
 
     input CodeInput{
@@ -81,9 +83,10 @@ export const typeDefs = gql`
     }
 
     type Mutation {
-        createTransaction(reference: String, amount: Float): Transaction,
+        createTransaction(createdAt: String, reference: String, type: String, amount: Float): Transaction,
         createAccount(name: String, parentId: String, currencyId: String, authorId: String, level: String, code: AccountCode): Account,
         deleteAccount(_id: ID!): String,
+        deleteTransaction(_id: ID!): String,
         updateAccount(_id: ID!, account: AccountInput): Account,
     }
 `
