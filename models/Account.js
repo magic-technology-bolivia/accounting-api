@@ -18,8 +18,8 @@ const accountSchema = new Schema({
     currencyId:{
         type: Schema.Types.ObjectId,
     },
-    code: {           
-        element: { 
+    code: {
+        element: {
             type: String,
         },
         group: {

@@ -66,6 +66,9 @@ export const resolvers = {
 
         dollibarrGetCategories: async() =>{
           return Dolibarr.getCategories();
+        },
+        productReport: async() => {
+          return Dolibarr.detailListProductStock(true);
         }
     },
     Mutation: {

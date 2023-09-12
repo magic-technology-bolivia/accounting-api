@@ -44,6 +44,16 @@ export const typeDefs = gql`
         byCost: Int
         author: User
     }
+    type productReportData{
+        code: String,        
+        description: String,
+        physicalStock: String,
+    }
+    type ProductReport{
+        result: Boolean,
+        data: [productReportData],        
+        message: String,
+    }
     type DolibarrCategory{
         id: ID,
         label: String,
@@ -57,6 +67,7 @@ export const typeDefs = gql`
         allTransactions: [Transaction],
         accountBy(id:ID): Account,
         dollibarrGetCategories: [DolibarrCategory],
+        productReport: orders,
     }
 
     input CodeInput{

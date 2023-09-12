@@ -11,7 +11,7 @@ npm i express apollo-server-express dotenv graphql mongoose
 npm i axios
 npm i winston
 npm i querystring
-
+npm i lodash
 
 --------- GRAPHQL ---------------
 
