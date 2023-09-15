@@ -15,7 +15,7 @@ export const resolvers = {
                   foreignField: '_id',
                   as: 'author'
                 }
-              },                
+              },               
               {
                 $unwind: "$author"
               },
@@ -26,7 +26,7 @@ export const resolvers = {
                   foreignField: '_id',
                   as: 'currency'
                 }
-              },                
+              },      
               {
                 $unwind: "$currency"
               },
@@ -89,9 +89,10 @@ export const resolvers = {
           const {createdAt} = args;
           const {reference} = args;
           const {type} = args;
-          const {amount} = args;
+          const {amountIn} = args;
+          const {amountOut} = args;
 
-          const newTransaction = new Transaction({createdAt, reference, type, amount});
+          const newTransaction = new Transaction({createdAt, reference, type, amountIn, amountOut});
           await newTransaction.save();            
           return newTransaction;
         },

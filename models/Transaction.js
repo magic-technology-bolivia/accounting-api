@@ -2,7 +2,8 @@ const {Schema, model} = require('mongoose');
 
 const transactionSchema = new Schema({
     createdAt: { 
-        type: Date
+        type: Date,
+        default: Date.now
     },
     reference: {
         type: String,
@@ -13,9 +14,14 @@ const transactionSchema = new Schema({
         required: true,
         enum: ['ingreso', 'egreso']
     },
-    amount: {
+    amountIn: {
         type: Number,
-        required: true,
+        default: 0,
+        min: 0,
+    },
+    amountOut: {
+        type: Number,
+        default: 0,
         min: 0,
     },
 },

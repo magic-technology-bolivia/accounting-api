@@ -26,7 +26,8 @@ export const typeDefs = gql`
         createdAt: String,
         reference: String,
         type: String,
-        amount: Float,
+        amountIn: Float,
+        amountOut: Float
     }
     type Account {
         _id: ID
@@ -100,7 +101,7 @@ export const typeDefs = gql`
     }
 
     type Mutation {
-        createTransaction(createdAt: String, reference: String, type: String, amount: Float): Transaction,
+        createTransaction(createdAt: String, reference: String, type: String, amountIn: Float, amountOut: Float): Transaction,
         createAccount(name: String, parentId: String, currencyId: String, authorId: String, level: String, code: AccountCode): Account,
         deleteAccount(_id: ID!): String,
         deleteTransaction(_id: ID!): String,
