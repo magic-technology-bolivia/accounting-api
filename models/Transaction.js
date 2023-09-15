@@ -2,7 +2,7 @@ const {Schema, model} = require('mongoose');
 
 const transactionSchema = new Schema({
     createdAt: { 
-        type: Date, 
+        type: Date
     },
     reference: {
         type: String,

@@ -65,9 +65,9 @@ export const typeDefs = gql`
         allAccounts: [Account],
         allCurrencies: [Currency],
         allTransactions: [Transaction],
-        accountBy(id:ID): Account,
+        accountBy(accountId:ID!): Account,
         dollibarrGetCategories: [DolibarrCategory],
-        productReport: orders,
+        productReport: ProductReport,
     }
 
     input CodeInput{

@@ -60,7 +60,8 @@ export const resolvers = {
         },
 
         accountBy: async (_: any, args: any) => {
-            const account = await Account.findById(args.accountId);
+          const {accountId} = args;
+            const account = await Account.findById(accountId);
             return account;
         },
 
