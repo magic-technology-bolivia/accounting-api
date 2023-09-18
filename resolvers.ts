@@ -55,7 +55,13 @@ export const resolvers = {
             return currencies;
         },
         allTransactions: async () => {
-          const transactions = await Transaction.find();
+          const transactions = await Transaction.aggregate([
+            {
+              $addFields: {
+                createdAtFriendly: { $dateToString: { format: "%d\/%m\/%Y %H:%M", date: "$createdAt" } }
+               }
+            }
+          ]);
           return transactions;
         },
 

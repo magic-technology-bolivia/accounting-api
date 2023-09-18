@@ -24,6 +24,7 @@ export const typeDefs = gql`
     type Transaction{
         _id: ID,
         createdAt: String,
+        createdAtFriendly: String,
         reference: String,
         type: String,
         amountIn: Float,
