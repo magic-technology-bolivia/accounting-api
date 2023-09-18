@@ -55,7 +55,17 @@ export const resolvers = {
             return currencies;
         },
         allTransactions: async () => {
-          const transactions = await Transaction.find();
+          const transactions = await Transaction.aggregate( [ {
+            $project: {
+               date: {
+                  $dateFromString: {
+                     dateString: '$date',
+                     timezone: '$timezone',
+                     onNull: new Date(0)
+                  }
+               }
+            }
+         } ] )
           return transactions;
         },
 
