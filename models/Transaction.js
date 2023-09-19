@@ -14,16 +14,11 @@ const transactionSchema = new Schema({
         required: true,
         enum: ['ingreso', 'egreso']
     },
-    amountIn: {
+    amount: {
         type: Number,
         default: 0,
         min: 0,
-    },
-    amountOut: {
-        type: Number,
-        default: 0,
-        min: 0,
-    },
+    }
 },
 {
     timestamps: {updatedAt: true }

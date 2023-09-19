@@ -27,9 +27,9 @@ export const typeDefs = gql`
         createdAtFriendly: String,
         reference: String,
         type: String,
-        amountIn: Float,
-        amountOut: Float
+        amount: String,        
     }
+    
     type Account {
         _id: ID
         name: String,        
@@ -61,12 +61,20 @@ export const typeDefs = gql`
         label: String,
         description: String,
     }
+    type AtomicTransactionsTotal{
+        _id: String,
+        total: Float,        
+    }
+    type QueryTransaction{
+        transactionsList: [Transaction],
+        transactionsTotal: [AtomicTransactionsTotal],
+    }
 
     type Query {
         hello:String,
         allAccounts: [Account],
         allCurrencies: [Currency],
-        allTransactions: [Transaction],
+        allTransactions: [QueryTransaction],
         accountBy(accountId:ID!): Account,
         dollibarrGetCategories: [DolibarrCategory],
         productReport: ProductReport,
@@ -102,7 +110,7 @@ export const typeDefs = gql`
     }
 
     type Mutation {
-        createTransaction(createdAt: String, reference: String, type: String, amountIn: Float, amountOut: Float): Transaction,
+        createTransaction(createdAt: String, reference: String, type: String, amount: Float): Transaction,
         createAccount(name: String, parentId: String, currencyId: String, authorId: String, level: String, code: AccountCode): Account,
         deleteAccount(_id: ID!): String,
         deleteTransaction(_id: ID!): String,

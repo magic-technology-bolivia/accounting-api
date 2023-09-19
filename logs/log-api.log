@@ -1,0 +1,5 @@
+{
+  message: 'Error function Axios: AxiosError: Request failed with status code 404 URL = http://localhost/dolibarr/api/index.php/categories?sortfield=t.rowid&sortorder=ASC&limit=2000',
+  level: '\x1B[32minfo\x1B[39m',
+  timestamp: '2023-09-19T15:46:24.735Z'
+}

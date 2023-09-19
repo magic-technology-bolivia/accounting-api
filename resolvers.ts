@@ -57,11 +57,29 @@ export const resolvers = {
         allTransactions: async () => {
           const transactions = await Transaction.aggregate([
             {
-              $addFields: {
-                createdAtFriendly: { $dateToString: { format: "%d\/%m\/%Y %H:%M", date: "$createdAt" } }
-               }
+              $facet: {
+                transactionsList: [
+                  {
+                    $addFields: {
+                      createdAtFriendly: { $dateToString: { format: "%d\/%m\/%Y %H:%M", date: "$createdAt" } }
+                    }
+                  }
+                ],
+                transactionsTotal: [
+                  {
+                    $group: {
+                      _id: "$type",
+                      total: { $sum: "$amount" },
+                    }
+                  },
+                  {
+                    $sort: {_id: 1}
+                  }
+                ]
+              }
             }
           ]);
+          
           return transactions;
         },
 
@@ -95,10 +113,9 @@ export const resolvers = {
           const {createdAt} = args;
           const {reference} = args;
           const {type} = args;
-          const {amountIn} = args;
-          const {amountOut} = args;
+          const {amount} = args;          
 
-          const newTransaction = new Transaction({createdAt, reference, type, amountIn, amountOut});
+          const newTransaction = new Transaction({createdAt, reference, type, amount});
           await newTransaction.save();            
           return newTransaction;
         },
