@@ -46,7 +46,7 @@ export const resolvers = {
               {
                 $sort: {updateAt: -1}
               }
-            ])
+            ]);
 
             return accounts;
         },
@@ -63,6 +63,9 @@ export const resolvers = {
                     $addFields: {
                       createdAtFriendly: { $dateToString: { format: "%d\/%m\/%Y %H:%M", date: "$createdAt" } }
                     }
+                  },
+                  {
+                    $sort: {createdAt: -1}
                   }
                 ],
                 transactionsTotal: [
