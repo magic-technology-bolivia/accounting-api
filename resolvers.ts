@@ -100,26 +100,37 @@ export const resolvers = {
         }
     },
     Mutation: {
-        createAccount: async (_: any, args: any) => {            
+        createAccount: async (_: any, args: any) => {
             const {name} = args;
             const {parentId} = args;
             const {currencyId} = args;
-            const {authorId} = args;            
-            const {level} = args;
+            const {authorId} = args;
+            const {parentLevel} = args;
             const {code} = args;
 
-            const newAccount = new Account({name, parentId, currencyId, authorId, level, code});
-            await newAccount.save();            
+            let level = 1;
+
+            if(parentLevel)
+             level = parseInt(parentLevel)+1;
+
+
+            const newAccount = new Account({name, 
+              parentId, 
+              currencyId, 
+              authorId, 
+              level,
+              code});
+            await newAccount.save();
             return newAccount;
         },
-        createTransaction: async (_: any, args: any) => {            
+        createTransaction: async (_: any, args: any) => {
           const {createdAt} = args;
           const {reference} = args;
           const {type} = args;
-          const {amount} = args;          
+          const {amount} = args;
 
           const newTransaction = new Transaction({createdAt, reference, type, amount});
-          await newTransaction.save();            
+          await newTransaction.save();
           return newTransaction;
         },
         async deleteAccount(_: any, {_id}: any){

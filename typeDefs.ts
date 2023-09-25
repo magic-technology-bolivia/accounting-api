@@ -111,7 +111,7 @@ export const typeDefs = gql`
 
     type Mutation {
         createTransaction(createdAt: String, reference: String, type: String, amount: Float): Transaction,
-        createAccount(name: String, parentId: String, currencyId: String, authorId: String, level: String, code: AccountCode): Account,
+        createAccount(name: String, parentId: String, currencyId: String, authorId: String, parentLevel: String, code: AccountCode): Account,
         deleteAccount(_id: ID!): String,
         deleteTransaction(_id: ID!): String,
         updateAccount(_id: ID!, account: AccountInput): Account,
