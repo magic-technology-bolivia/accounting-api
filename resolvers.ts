@@ -35,16 +35,16 @@ export const resolvers = {
                   "friendlyCode": {
                     $concat: [
                       "$code.element",
-                      { $cond: [ { $ne: [ '$code.group', "" ] }, {$concat: ['.', '$code.group']}, '' ] },
-                      { $cond: [ { $ne: [ '$code.account', "" ] }, {$concat: ['.', '$code.account']}, '' ] },
-                      { $cond: [ { $ne: [ '$code.subaccount', "" ] }, {$concat: ['.','$code.subaccount']}, '' ] },
-                      { $cond: [ { $ne: [ '$code.auxiliary', "" ] }, {$concat: ['.','$code.auxiliary']}, '' ] },
+                      { $cond: [ { $ne: [ '$code.group', null ] }, {$concat: ['.', '$code.group']}, '' ] },
+                      { $cond: [ { $ne: [ '$code.account', null ] }, {$concat: ['.', '$code.account']}, '' ] },
+                      { $cond: [ { $ne: [ '$code.subaccount', null ] }, {$concat: ['.','$code.subaccount']}, '' ] },
+                      { $cond: [ { $ne: [ '$code.auxiliary', null ] }, {$concat: ['.','$code.auxiliary']}, '' ] },
                     ]
                   }
                 }
               },
               {
-                $sort: {updateAt: -1}
+                $sort: {updatedAt: -1}
               }
             ]);
 
@@ -93,10 +93,12 @@ export const resolvers = {
         },
 
         dollibarrGetCategories: async() =>{
-          return Dolibarr.getCategories();
+          return "hello 1";
+          //return Dolibarr.getCategories();
         },
         productReport: async() => {
-          return Dolibarr.detailListProductStock(true);
+          return "hello 2";
+          //return Dolibarr.detailListProductStock(true);
         }
     },
     Mutation: {
@@ -133,13 +135,13 @@ export const resolvers = {
           await newTransaction.save();
           return newTransaction;
         },
-        async deleteAccount(_: any, {_id}: any){
-            await Account.findByIdAndDelete(_id);
-            return "Account deleted";
+        async deleteAccount(_: any, {id}: any){
+          const accountDeleted = await Account.findByIdAndDelete(id);
+          return accountDeleted;
         },
         async deleteTransaction(_: any, {_id}: any){
-          await Transaction.findByIdAndDelete(_id);
-          return "Transaction deleted";
+          let transactionDeleted = Transaction.findByIdAndDelete(_id);
+          return transactionDeleted;
         },
         async updateAccount(_: any, {account, _id}: any){
             const accountUpdated = await Account.findByIdAndUpdate(_id, account, {

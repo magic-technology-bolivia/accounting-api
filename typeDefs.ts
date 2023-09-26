@@ -76,8 +76,8 @@ export const typeDefs = gql`
         allCurrencies: [Currency],
         allTransactions: [QueryTransaction],
         accountBy(accountId:ID!): Account,
-        dollibarrGetCategories: [DolibarrCategory],
-        productReport: ProductReport,
+        dollibarrGetCategories: String,
+        productReport: String,
     }
 
     input CodeInput{
@@ -112,8 +112,8 @@ export const typeDefs = gql`
     type Mutation {
         createTransaction(createdAt: String, reference: String, type: String, amount: Float): Transaction,
         createAccount(name: String, parentId: String, currencyId: String, authorId: String, parentLevel: String, code: AccountCode): Account,
-        deleteAccount(_id: ID!): String,
-        deleteTransaction(_id: ID!): String,
+        deleteAccount(id: String!): Account,
+        deleteTransaction(_id: String!): Transaction,
         updateAccount(_id: ID!, account: AccountInput): Account,
     }
 `
