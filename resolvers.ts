@@ -104,16 +104,22 @@ export const resolvers = {
     Mutation: {
         createAccount: async (_: any, args: any) => {
             const {name} = args;
-            const {parentId} = args;
+            let {parentId} = args;
             const {currencyId} = args;
             const {authorId} = args;
             const {parentLevel} = args;
             const {code} = args;
 
-            let level = 1;
+            console.log(args);
+
+            let level = 1
 
             if(parentLevel)
              level = parseInt(parentLevel)+1;
+
+            if(parentId && parentId === ''){
+              parentId = 'null';
+            }
 
 
             const newAccount = new Account({name, 
