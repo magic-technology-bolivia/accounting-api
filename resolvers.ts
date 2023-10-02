@@ -114,17 +114,18 @@ export const resolvers = {
 
             let level = 1;
 
-            let newAccountData = {};
+            let newAccountData = {name, currencyId, authorId, code, level, parentId};
 
 
             if(parentLevel)
               level = parseInt(parentLevel)+1;
 
-            if( ! (parentId && parentId === "") ){              
+            if(parentId && parentId !== ""){
+              console.log("parentId", parentId);
               newAccountData = {...newAccountData, parentId: parentId};
             }
 
-            console.log(newAccountData);
+            //console.log(newAccountData);
 
             const newAccount = new Account(newAccountData);
             await newAccount.save();
