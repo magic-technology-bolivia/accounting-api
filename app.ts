@@ -21,11 +21,12 @@ app.use('/private', (_:any, res:any) => res.status(404).send('Not found Page') )
 module.exports = app;
 
 async function start() {
+    
 
     const apolloServer = new ApolloServer({
         typeDefs:typeDefs,
         resolvers:resolvers,
-        introspection: true 
+        introspection: true ,        
     })
 
     await apolloServer.start();
